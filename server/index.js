@@ -48,13 +48,18 @@ io.on("connection", (socket) => {
 
 
 
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "/client/dist")));
 
-	app.get("*name", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-	});
-}
+if (process.env.NODE_ENV === "production") {
+    const frontendPath = path.join(__dirname, "../client/dist")
+    // Serve static files
+    app.use(express.static(frontendPath));
+  
+  
+    // Handle SPA routing - send all requests to index.html
+    app.get("*name", (req, res) => {
+      res.sendFile(path.join(frontendPath, "index.html"));
+    });
+  }
 const PORT = process.env.PORT;
 
 server.listen(PORT, (req, res) => {
