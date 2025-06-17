@@ -4,7 +4,6 @@ dotenv.config();
 
 import cors from "cors";
 import { createServer } from "http";
-import path from "path";
 import { Server } from "socket.io";
 
 const app = express();
@@ -16,7 +15,6 @@ const io = new Server(server, {
         credentials: true,
     }
 });
-const __dirname = path.resolve();
 
 app.use(cors(
     {
@@ -47,19 +45,6 @@ io.on("connection", (socket) => {
 })
 
 
-
-
-if (process.env.NODE_ENV === "production") {
-    const frontendPath = path.join(__dirname, "../client/dist")
-    // Serve static files
-    app.use(express.static(frontendPath));
-  
-  
-    // Handle SPA routing - send all requests to index.html
-    app.get("*name", (req, res) => {
-      res.sendFile(path.join(frontendPath, "index.html"));
-    });
-  }
 const PORT = process.env.PORT;
 
 server.listen(PORT, (req, res) => {
