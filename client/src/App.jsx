@@ -10,7 +10,7 @@ function App() {
   
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("connected", socket.id);
+      console.log("connected with server", socket.id);
       setSocketId(socket.id);
     })
 
